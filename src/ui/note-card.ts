@@ -4,6 +4,7 @@ import { createViewHTML, createEditHTML } from './templates/note-template';
 import { setupAttachments } from './note-attachments';
 import { showAttachments } from './attachment-viewer';
 import { setupVoiceInput } from './note-voice';
+import { toggleAudio, stopCurrentAudio } from './audio-player';
 
 export function createNoteCard(
     note: Note, 
@@ -74,6 +75,21 @@ export function createNoteCard(
                 viewMode.innerHTML = tempDiv.querySelector('.note-view-mode')!.innerHTML;
                 
                 bindViewEvents();
+
+                        card.querySelector('.view-files-btn')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showAttachments(note);
+        });
+
+        // Проигрывание аудио
+        card.querySelector('.play-audio-btn')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const btn = e.currentTarget as HTMLButtonElement;
+            const mediaId = btn.dataset.id;
+            if (mediaId) toggleAudio(btn, mediaId);
+        });
+
+        
                 
                 card.classList.remove('editing');
                 editMode.style.display = 'none';
@@ -93,23 +109,38 @@ export function createNoteCard(
 
     function bindViewEvents() {
         card.querySelector('.edit-btn')?.addEventListener('click', (e) => { e.stopPropagation(); enterEditMode(); });
+        
         card.querySelector('.delete-btn')?.addEventListener('click', async (e) => {
             e.stopPropagation();
             if (confirm('Удалить заметку?')) {
+                stopCurrentAudio(); 
                 await deleteNote(note.id);
                 card.style.transform = 'scale(0)';
                 setTimeout(() => { card.remove(); onUpdate(); }, 300);
             }
         });
+
         card.querySelector('.pin-btn')?.addEventListener('click', async (e) => {
             e.stopPropagation();
             note.isPinned = !note.isPinned;
             await saveNote(note);
             onUpdate();
         });
+
         card.querySelector('.view-files-btn')?.addEventListener('click', (e) => {
             e.stopPropagation();
             showAttachments(note);
+        });
+
+        // Воспроизведение аудио
+        card.querySelector('.play-audio-btn')?.addEventListener('click', (e) => {
+            e.preventDefault(); // На всякий случай
+            e.stopPropagation();
+            const btn = e.currentTarget as HTMLButtonElement;
+            const mediaId = btn.dataset.id;
+            if (mediaId) {
+                toggleAudio(btn, mediaId);
+            }
         });
     }
 

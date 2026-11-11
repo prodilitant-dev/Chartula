@@ -7,7 +7,18 @@ export function createViewHTML(note: Note): string {
         : '';
 
     const attachmentsBtn = note.attachments.length > 0
-        ? `<button class="action-btn view-files-btn" title="Вложения">📎 ${note.attachments.length}</button>`
+        ? `<button type="button" class="action-btn view-files-btn" title="Вложения">📎 ${note.attachments.length}</button>`
+        : '';
+
+    const audioAtt = note.attachments.find((a: { type: string, name: string }) => {
+        const isAudioMime = a.type && a.type.startsWith('audio/');
+        const isAudioExt = a.name && /\.(mp3|wav|ogg|m4a|aac|flac|webm)$/i.test(a.name);
+        return isAudioMime || isAudioExt;
+    });
+
+    // ДОБАВЛЕН type="button"
+    const playBtn = audioAtt
+        ? `<button type="button" class="action-btn play-audio-btn" data-id="${audioAtt.id}" title="Слушать">▶️</button>`
         : '';
 
     return `
@@ -20,11 +31,12 @@ export function createViewHTML(note: Note): string {
             <div class="note-tags">${tagsHTML}</div>
             
             <div class="note-actions">
+                ${playBtn}
                 ${attachmentsBtn}
                 <div style="flex:1"></div>
-                <button class="action-btn pin-btn ${note.isPinned ? 'active' : ''}" title="Закрепить">📌</button>
-                <button class="action-btn edit-btn" title="Редактировать">✏️</button>
-                <button class="action-btn delete-btn" title="Удалить">🗑️</button>
+                <button type="button" class="action-btn pin-btn ${note.isPinned ? 'active' : ''}" title="Закрепить">📌</button>
+                <button type="button" class="action-btn edit-btn" title="Редактировать">✏️</button>
+                <button type="button" class="action-btn delete-btn" title="Удалить">🗑️</button>
             </div>
         </div>
     `;
@@ -47,5 +59,6 @@ export function createEditHTML(note: Note): string {
                     <button type="button" class="btn voice-btn" title="Голосовой ввод">🎤 Диктовать</button>
                 </div>
             </div>
+        </div>
     `;
 }
