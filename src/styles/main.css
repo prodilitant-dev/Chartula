@@ -1,4 +1,9 @@
 @import './variables.css';
 @import './base.css';
-@import './components.css';
-@import './modal.css';
+@import './ui/layout.css';
+@import './ui/buttons.css';
+@import './ui/inputs.css';
+@import './ui/cards.css';
+@import './ui/attachments.css';
+@import './ui/modals.css';
+@import './ui/toast.css';
