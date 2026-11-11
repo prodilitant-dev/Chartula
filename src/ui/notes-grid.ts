@@ -56,7 +56,7 @@ export async function renderNotes() {
 
   // 3. Фильтруем по категории И по поисковому запросу
     const filtered = notes.filter((n) => {
-        let matchCategory: boolean; // Просто объявляем тип, без начального значения
+        let matchCategory: boolean;
         
         if (filterSelect.value === '__pinned__') {
             matchCategory = n.isPinned;

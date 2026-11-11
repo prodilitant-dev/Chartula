@@ -114,116 +114,50 @@
 }
 
 /* =================================================================
-   ЦВЕТА КАТЕГОРИЙ (Кнопки-стикеры)
+   ЦВЕТА КАТЕГОРИЙ (Выпадающий список)
    ================================================================= */
 .category-colors-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 250px;
-  overflow-y: auto;
-  padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-top: 5px;
 }
 
+/* Строго в одну строку */
 .cat-color-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px 0;
+    display: flex;
+    flex-direction: row; /* Принудительно в строку */
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+    gap: 15px; /* Расстояние между названием и селектом */
 }
 
+.cat-color-row:last-child {
+    border-bottom: none;
+}
+
+/* Название категории занимает всё свободное место */
 .cat-name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+    flex: 1; /* Растягивает название */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.cat-dots {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  padding: 5px 0;
+/* Селект фиксированной ширины и не сжимается */
+.cat-color-select {
+    width: 140px !important; /* Принудительно задаем ширину */
+    flex-shrink: 0; /* Запрещаем сжиматься */
+    padding: 6px 10px;
+    font-size: 0.85rem;
 }
-
-/* Кнопки-цвета в стиле "кривых" кнопок */
-.color-dot {
-  width: 26px;
-  height: 26px;
-  cursor: pointer;
-
-  /* Кривая форма */
-  border-radius: var(--wobbly-btn);
-  /* Рамка как у кнопок */
-  border: 2px solid var(--border-light);
-  /* Тень для объема */
-  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
-
-  transition:
-    transform 0.2s,
-    border-color 0.2s,
-    box-shadow 0.2s;
-}
-
-/* Рандомный наклон для стикеров */
-.color-dot:nth-child(even) {
-  transform: rotate(4deg);
-}
-.color-dot:nth-child(odd) {
-  transform: rotate(-3deg);
-}
-
-.color-dot:hover {
-  transform: scale(1.15) rotate(0deg);
-  border-color: var(--accent);
-  z-index: 10;
-}
-
-/* Выбранный цвет */
-.color-dot.selected {
-  border-color: var(--accent);
-  border-width: 3px;
-  transform: scale(1.15) rotate(0deg);
-  box-shadow:
-    0 0 0 2px var(--surface),
-    2px 2px 0px rgba(0, 0, 0, 0.2);
-}
-
-/* Палитра цветов */
-.color-dot.c1 {
-  background: var(--note-c1);
-}
-.color-dot.c2 {
-  background: var(--note-c2);
-}
-.color-dot.c3 {
-  background: var(--note-c3);
-}
-.color-dot.c4 {
-  background: var(--note-c4);
-}
-.color-dot.c5 {
-  background: var(--note-c5);
-}
-.color-dot.c6 {
-  background: var(--note-c6);
-}
-.color-dot.c7 {
-  background: var(--note-c7);
-}
-.color-dot.c8 {
-  background: var(--note-c8);
-}
-.color-dot.c9 {
-  background: var(--note-c9);
-}
-.color-dot.c10 {
-  background: var(--note-c10);
-}
-
 /* =================================================================
    ГАЛЕРЕЯ ВЛОЖЕНИЙ (Просмотр файлов)
    ================================================================= */

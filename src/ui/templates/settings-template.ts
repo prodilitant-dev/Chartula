@@ -78,7 +78,7 @@ export function createSettingsHTML(): string {
         <div class="modal-overlay" id="settings-modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Настройки</h3>
+                    <h3>© 2026 Chartula.</h3>
                     <button class="close-btn" id="close-settings">✖</button>
                 </div>
 
@@ -133,12 +133,20 @@ export function createSettingsHTML(): string {
                 </div>
 
                 <!-- ОБ АВТОРЕ -->
-                <details class="settings-details" style="margin-top: 15px;">
+                <details class="settings-details" style="margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 15px;">
                     <summary>👤 Об авторе</summary>
                     <div class="about-content">
-                        <p>Привет. Меня зовут Виталик. Я — <strong>ПроДилИтант</strong>.</p>
-                        <p>Верхом на ИИ, Ctrl+C, Ctrl+V, погнали к новым горизонтам. Делаю приложения, пилю доски и создаю инструменты, которые меняют жизни. Честно. Грязно. Полезно.</p>
-                        <p style="color: var(--accent); font-family: var(--font-hand); font-size: 1.5rem; margin-top: 15px;">Pank immortalis est.</p>
+                        <p>Привет. Меня зовут Виталий. Я — <strong>ПроДилИтант</strong>.</p>
+                        <p>Делаю легкие приложения без рекламы и подписок, пилю доски и делаю всякие разности. Честно. Грязно. Полезно.</p>
+                    
+                        
+                        <!-- Кнопка поддержки (заглушка) -->
+                        <button class="btn btn-support" id="btn-support" style="width: 100%;">
+                            🤘 Поддержать автора 🤘
+                        </button>
+
+                            <p style="color: var(--accent); font-family: var(--font-hand); font-size: 1.5rem; margin-top: 15px; margin-bottom: 15px;">Pank immortalis est.</p>
+
                     </div>
                 </details>
             </div>

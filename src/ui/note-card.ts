@@ -5,7 +5,8 @@ import { setupAttachments } from './note-attachments';
 import { showAttachments } from './attachment-viewer';
 import { setupAudioRecorder } from './note-recorder';
 import { toggleAudio, stopCurrentAudio } from './audio-player';
-import { getSettings } from '../storage/settings'; // <-- Импортируем настройки
+import { getSettings } from '../storage/settings';
+import { downloadICS } from '../utils/calendar';
 
 export function createNoteCard(
   note: Note,
@@ -93,9 +94,12 @@ export function createNoteCard(
     if (save) {
       note.title = titleInput.value.trim();
       note.text = textInput.value.trim();
-      // РАЗБИВАЕМ ПО ПРОБЕЛАМ (а не по запятым)
-      note.tags = tagsInput.value.replace(/,/g, ' ').trim().split(/\s+/).filter(Boolean);
-      note.updatedAt = Date.now();
+            note.tags = tagsInput.value.replace(/,/g, ' ').trim().split(/\s+/).filter(Boolean);
+            
+            const reminderInput = card.querySelector('.edit-reminder') as HTMLInputElement;
+            note.reminder = reminderInput.value ? new Date(reminderInput.value).toISOString() : undefined;
+
+            note.updatedAt = Date.now();      note.updatedAt = Date.now();
 
       saveNote(note).then(() => {
         onUpdate(); // Перерисовываем всю сетку, чтобы применились цвета категорий
@@ -148,6 +152,12 @@ export function createNoteCard(
       const btn = e.currentTarget as HTMLButtonElement;
       if (btn.dataset.id) toggleAudio(btn, btn.dataset.id);
     });
+
+        card.querySelector('.add-to-calendar-btn')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            downloadICS(note);
+        });
+        
   }
 
   bindViewEvents();

@@ -1,190 +1,245 @@
+/* =================================================================
+   БАЗОВАЯ КАРТОЧКА
+   ================================================================= */
 .note-card {
-  color: var(--note-text);
-  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  transition: var(--transition);
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-radius: var(--wobbly);
-  overflow: hidden;
-  min-height: 250px;
+    color: var(--note-text);
+    box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: var(--transition);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--wobbly);
+    overflow: hidden;
+    min-height: 250px;
 }
+
 .note-card:nth-child(even) {
-  border-radius: var(--wobbly-alt);
+    border-radius: var(--wobbly-alt);
 }
+
 .note-card:hover {
-  transform: translateY(-5px) scale(1.02) !important;
-  z-index: 10;
-  box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px) scale(1.02) !important;
+    z-index: 10;
+    box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.3);
 }
+
 .note-card.pinned {
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 15px rgba(217, 122, 56, 0.4);
-}
-.note-card.color-yellow {
-  background-color: var(--note-yellow);
-}
-.note-card.color-blue {
-  background-color: var(--note-blue);
-}
-.note-card.color-green {
-  background-color: var(--note-green);
-}
-.note-card.color-pink {
-  background-color: var(--note-pink);
-}
-
-.note-inner {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.note-view-mode {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-}
-.note-edit-mode {
-  display: none;
-  flex-direction: column;
-  gap: 10px;
-  height: 100%;
-  width: 100%;
-}
-.note-card.editing {
-  z-index: 100;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border: 2px dashed var(--accent);
-}
-
-.note-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
-  gap: 10px;
-}
-.note-title {
-  font-family: var(--font-hand);
-  font-size: 1.8rem;
-  font-weight: 700;
-  line-height: 1.1;
-  word-break: break-word;
-}
-.note-date {
-  font-size: 0.7rem;
-  color: #555;
-  font-weight: bold;
-  text-transform: uppercase;
-  white-space: nowrap;
-  margin-top: 5px;
-}
-.note-text {
-  font-size: 0.95rem;
-  flex-grow: 1;
-  margin-bottom: 15px;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.note-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: auto;
-  margin-bottom: 15px;
-}
-.tag {
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 0.75rem;
-  opacity: 0.9;
-}
-
-.note-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  border-top: 1px dashed rgba(0, 0, 0, 0.1);
-  padding-top: 10px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 15px rgba(217, 122, 56, 0.4);
+    background-color: var(--surface) !important;
+    color: var(--text) !important;
 }
 
 /* =================================================================
-   ФОН ИЗ КАРТИНКИ
+   ВНУТРЕННЯЯ СТРУКТУРА
    ================================================================= */
+.note-inner {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.note-view-mode {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.note-edit-mode {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.note-card.editing {
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 2px dashed var(--accent);
+}
+
+/* =================================================================
+   КОНТЕНТ (Заголовок, Дата, Текст, Теги)
+   ================================================================= */
+.note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.note-title {
+    font-family: var(--font-hand);
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+    word-break: break-word;
+}
+
+.note-text {
+    font-size: 0.95rem;
+    flex-grow: 1;
+    margin-bottom: 15px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.note-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: auto; /* Прижимает теги к низу */
+    margin-bottom: 10px;
+}
+
+.tag {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.75rem;
+    opacity: 0.9;
+}
+
+/* ПОДВАЛ КАРТОЧКИ (Дата слева, кнопки справа) */
+.note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px dashed rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.note-date {
+    font-size: 0.7rem;
+    color: #555;
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-bottom: 5px; /* Чтобы выравнивалось по низу кнопок */
+}
+
+/* =================================================================
+   КНОПКИ ДЕЙСТВИЙ (Адаптивные)
+   ================================================================= */
+.note-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap; 
+}
+
+.note-actions .action-btn {
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+}
+
+/* =================================================================
+   РЕДАКТОР (Шапка с датой)
+   ================================================================= */
+.edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.edit-header .edit-title {
+    flex: 1; /* Заголовок занимает всё свободное место */
+}
+
+.edit-reminder {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--note-text);
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+    outline: none;
+    width: 130px;
+    padding-bottom: 5px;
+    margin-top: 5px; /* Выравнивание с текстом заголовка */
+}
+
+/* =================================================================
+   ФОН ИЗ КАРТИНКИ (Цветной оверлей без блюра)
+   ================================================================= */
+.note-card.has-bg-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Псевдоэлемент заливает картинку родным цветом стикера */
+.note-card.has-bg-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: inherit; /* Берет цвет класса color-c1, color-c2 и т.д. */
+    opacity: 0.85; /* 85% цвета стикера, 15% картинки */
+    z-index: 0;
+    border-radius: inherit;
+}
+
 .note-card.has-bg-image .note-inner {
-  /* Делаем подложку полупрозрачной, чтобы фон был виден, но текст читался */
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border-radius: inherit;
-  height: 100%;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    position: relative;
+    z-index: 1; /* Контент поверх цветного слоя */
 }
 
-[data-theme='light'] .note-card.has-bg-image .note-inner {
-  background: rgba(0, 0, 0, 0.4); /* В темной теме подложка темнее */
-  color: #fff;
+/* Легкая тень для текста, чтобы читался поверх картинки */
+.note-card.has-bg-image .note-title,
+.note-card.has-bg-image .note-text,
+.note-card.has-bg-image .note-date {
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
-.note-card.has-bg-image .edit-title,
-.note-card.has-bg-image .edit-text,
-.note-card.has-bg-image .note-text {
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+/* =================================================================
+   ПАЛИТРА 10 ЦВЕТОВ
+   ================================================================= */
+.color-c1 { background-color: var(--note-c1); }
+.color-c2 { background-color: var(--note-c2); }
+.color-c3 { background-color: var(--note-c3); }
+.color-c4 { background-color: var(--note-c4); }
+.color-c5 { background-color: var(--note-c5); }
+.color-c6 { background-color: var(--note-c6); }
+.color-c7 { background-color: var(--note-c7); }
+.color-c8 { background-color: var(--note-c8); }
+.color-c9 { background-color: var(--note-c9); }
+.color-c10 { background-color: var(--note-c10); }
+
+/* =================================================================
+   НАПОМИНАНИЯ (Бейдж и Поля ввода)
+   ================================================================= */
+.note-reminder-badge {
+    display: inline-block;
+    background: rgba(217, 122, 56, 0.15);
+    color: var(--accent);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    border: 1px solid rgba(217, 122, 56, 0.3);
 }
 
-/* Генерация 10 цветов */
-.color-c1 {
-  background-color: var(--note-c1);
-}
-.color-c2 {
-  background-color: var(--note-c2);
-}
-.color-c3 {
-  background-color: var(--note-c3);
-}
-.color-c4 {
-  background-color: var(--note-c4);
-}
-.color-c5 {
-  background-color: var(--note-c5);
-}
-.color-c6 {
-  background-color: var(--note-c6);
-}
-.color-c7 {
-  background-color: var(--note-c7);
-}
-.color-c8 {
-  background-color: var(--note-c8);
-}
-.color-c9 {
-  background-color: var(--note-c9);
-}
-.color-c10 {
-  background-color: var(--note-c10);
-}
-
-.note-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-}
-
-.note-category {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: rgba(0, 0, 0, 0.05);
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-[data-theme='light'] .note-category {
-  background: rgba(0, 0, 0, 0.1);
+.edit-reminder {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--note-text);
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+    outline: none;
+    width: 130px;
+    padding-bottom: 5px;
 }
