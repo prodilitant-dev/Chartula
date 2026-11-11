@@ -1,84 +1,14 @@
-import { Note } from '../../types';
-import { escapeHtml, formatDate } from '../../utils/dom';
-
-export function createViewHTML(note: Note): string {
-  // Первый тег - категория
-  const category = note.tags[0] || 'Без категории';
-  // Остальные теги
-  const otherTags = note.tags.slice(1);
-
-  const tagsHTML =
-    otherTags.length > 0
-      ? otherTags.map((t: string) => `<span class="tag">#${escapeHtml(t)}</span>`).join('')
-      : '';
-
-  const attachmentsBtn =
-    note.attachments.length > 0
-      ? `<button type="button" class="action-btn view-files-btn" title="Вложения">📎 ${note.attachments.length}</button>`
-      : '';
-
-  const audioAtt = note.attachments.find((a: { type: string; name: string }) => {
-    const isAudioMime = a.type && a.type.startsWith('audio/');
-    const isAudioExt = a.name && /\.(mp3|wav|ogg|m4a|aac|flac|webm)$/i.test(a.name);
-    return isAudioMime || isAudioExt;
-  });
-
-  const playBtn = audioAtt
-    ? `<button type="button" class="action-btn play-audio-btn" data-id="${audioAtt.id}" title="Слушать">▶️</button>`
-    : '';
-
-  return `
-        <div class="note-view-mode">
-            <div class="note-header">
-                <div class="note-title">${escapeHtml(note.title || 'Без названия')}</div>
-                <div class="note-meta">
-                    <span class="note-category">${escapeHtml(category)}</span>
-                    <span class="note-date">${formatDate(note.createdAt)}</span>
-                </div>
-            </div>
-            <div class="note-text">${escapeHtml(note.text)}</div>
-            <div class="note-tags">${tagsHTML}</div>
-            
-            <div class="note-actions">
-                ${playBtn}
-                ${attachmentsBtn}
-                <div style="flex:1"></div>
-                <button type="button" class="action-btn pin-btn ${note.isPinned ? 'active' : ''}" title="Закрепить">📌</button>
-                <button type="button" class="action-btn delete-btn" title="Удалить">🗑️</button>
-            </div>
-        </div>
-    `;
-}
-
-export function createEditHTML(note: Note): string {
-  return `
-        <div class="note-edit-mode">
-            <input type="text" class="edit-title" placeholder="Заголовок" value="${escapeHtml(note.title)}">
-            <textarea class="edit-text" placeholder="Текст заметки...">${escapeHtml(note.text)}</textarea>
-            
-            <!-- Подсказка: первый тег = категория -->
-            <input type="text" class="edit-tags" placeholder="Категория тег тег..." value="${escapeHtml(note.tags.join(' '))}">
-            
-            <div class="edit-attachments-area">
-                <div class="attachment-previews" id="previews-${note.id}"></div>
-                <div class="edit-toolbar">
-                    <label class="btn add-file-btn">
-                        📎 Файл
-                        <input type="file" class="file-input" multiple accept="*/*" style="display:none;">
-                    </label>
-                    <button type="button" class="btn voice-btn" title="Записать голос">🎙️ Записать</button>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
 export function createSettingsHTML(): string {
-  return `
+    return `
         <div class="modal-overlay" id="settings-modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>© 2026 Chartula.</h3>
+                    <h3 style="display: flex; align-items: center; gap: 8px; margin: 0;">
+                        © 2026 Chartula. 
+                        <span id="app-version" title="Проверить обновления" style="font-size: 0.75rem; color: var(--text-muted); cursor: pointer; font-weight: normal; border-bottom: 1px dashed var(--text-muted);">
+                            v${__APP_VERSION__}
+                        </span>
+                    </h3>
                     <button class="close-btn" id="close-settings">✖</button>
                 </div>
 
@@ -138,15 +68,12 @@ export function createSettingsHTML(): string {
                     <div class="about-content">
                         <p>Привет. Меня зовут Виталий. Я — <strong>ПроДилИтант</strong>.</p>
                         <p>Делаю легкие приложения без рекламы и подписок, пилю доски и делаю всякие разности. Честно. Грязно. Полезно.</p>
-                    
+                        <p style="color: var(--accent); font-family: var(--font-hand); font-size: 1.5rem; margin-top: 15px; margin-bottom: 15px;">Pank immortalis est.</p>
                         
-                        <!-- Кнопка поддержки (заглушка) -->
+                        <!-- Кнопка поддержки -->
                         <button class="btn btn-support" id="btn-support" style="width: 100%;">
-                            🤘 Поддержать автора 🤘
+                            ❤️ Поддержать автора
                         </button>
-
-                            <p style="color: var(--accent); font-family: var(--font-hand); font-size: 1.5rem; margin-top: 15px; margin-bottom: 15px;">Pank immortalis est.</p>
-
                     </div>
                 </details>
             </div>

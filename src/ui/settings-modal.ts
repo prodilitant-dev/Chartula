@@ -3,6 +3,8 @@ import { getSettings, saveSettings } from '../storage/settings';
 import { exportData, importData } from '../storage/backup';
 import { getAllNotes } from '../storage/db';
 import { renderNotes } from './notes-grid';
+import { showToast } from './toast';
+import { checkForUpdates } from '../pwa/register';
 
 export function initSettingsModal() {
     const root = document.getElementById('modal-root');
@@ -36,6 +38,7 @@ export function initSettingsModal() {
     const renderCategoryColors = async () => {
         const notes = await getAllNotes();
         
+        // Собираем только первые теги (категории) и убираем дубликаты
         const categories = Array.from(new Set(
             notes
                 .filter(n => n.tags && n.tags.length > 0)
@@ -53,7 +56,6 @@ export function initSettingsModal() {
         catList.innerHTML = categories.map(cat => {
             const currentColorIdx = s.categoryColors[cat] || 1;
             
-            // Генерируем options для выпадающего списка
             let optionsHTML = '';
             colorNames.forEach((name, index) => {
                 const colorIdx = index + 1;
@@ -71,7 +73,7 @@ export function initSettingsModal() {
             `;
         }).join('');
 
-        // Обработчик изменения цвета
+        // Обработчик изменения цвета в выпадающем списке
         catList.querySelectorAll('.cat-color-select').forEach(select => {
             select.addEventListener('change', (e) => {
                 const el = e.target as HTMLSelectElement;
@@ -97,15 +99,27 @@ export function initSettingsModal() {
     closeBtn.addEventListener('click', () => modal.classList.remove('active'));
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
 
+    // Обработчики базовых настроек
     selectTheme.addEventListener('change', () => saveSettings({ theme: selectTheme.value as any }));
     selectFontSize.addEventListener('change', () => saveSettings({ fontSize: selectFontSize.value as any }));
     selectGrid.addEventListener('change', () => saveSettings({ gridCols: selectGrid.value as any }));
 
+    // Экспорт / Импорт
     document.getElementById('btn-export')?.addEventListener('click', exportData);
     const inputImport = document.getElementById('input-import') as HTMLInputElement;
     inputImport.addEventListener('change', (e) => {
         const file = (e.target as HTMLInputElement).files?.[0];
         if (file) importData(file);
         inputImport.value = '';
+    });
+
+    // Кнопка поддержки автора
+    document.getElementById('btn-support')?.addEventListener('click', () => {
+        showToast('Донаты скоро появятся! Спасибо, что пользуетесь приложением ❤️', 5000);
+    });
+
+    // Проверка обновлений по клику на версию
+    document.getElementById('app-version')?.addEventListener('click', async () => {
+        await checkForUpdates(); // Убрали showToast, теперь он внутри функции
     });
 }

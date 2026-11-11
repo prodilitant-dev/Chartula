@@ -14,9 +14,9 @@ export default [
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
-      // ВОТ ЭТА СТРОКА РЕШАЕТ 99% ОШИБОК
       globals: {
-        ...globals.browser, 
+        ...globals.browser,
+        __APP_VERSION__: 'readonly', // <-- ДОБАВЬ ЭТУ СТРОКУ
       },
     },
     plugins: {
