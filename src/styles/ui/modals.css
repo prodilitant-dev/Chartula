@@ -174,3 +174,25 @@
   align-items: center;
   width: 100%;
 }
+
+/* Ссылки в блоке "Об авторе" */
+.about-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+}
+
+.about-links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+    word-break: break-all;
+}
+
+.about-links a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}

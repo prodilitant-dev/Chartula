@@ -144,7 +144,7 @@ export function initSettingsModal() {
 
     // Кнопка поддержки автора
     document.getElementById('btn-support')?.addEventListener('click', () => {
-        showToast('Донаты скоро появятся! Спасибо, что пользуетесь приложением ❤️', 5000);
+        showToast('Поддержать можно, подписавшись на канал. И всегда открыта Л/С!', 5000);
     });
 
     // Проверка обновлений по клику на версию
