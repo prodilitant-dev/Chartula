@@ -56,7 +56,7 @@ export function createEditHTML(note: Note): string {
                         📎 Добавить файл
                         <input type="file" class="file-input" multiple accept="*/*" style="display:none;">
                     </label>
-                    <button type="button" class="btn voice-btn" title="Голосовой ввод">🎤 Диктовать</button>
+                    <button type="button" class="btn voice-btn" title="Записать голос">🎙️ Записать</button>
                 </div>
             </div>
         </div>

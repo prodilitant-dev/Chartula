@@ -1,9 +1,9 @@
 import { Note } from '../types';
-import { saveNote, deleteNote } from '../storage/db';
+import { saveNote, deleteNote, getMedia } from '../storage/db'; // <- Добавлен getMedia
 import { createViewHTML, createEditHTML } from './templates/note-template';
 import { setupAttachments } from './note-attachments';
 import { showAttachments } from './attachment-viewer';
-import { setupVoiceInput } from './note-voice';
+import { setupAudioRecorder } from './note-recorder'; // <- Новый модуль
 import { toggleAudio, stopCurrentAudio } from './audio-player';
 
 export function createNoteCard(
@@ -35,14 +35,26 @@ export function createNoteCard(
     const tagsInput = card.querySelector('.edit-tags') as HTMLInputElement;
     const textInput = card.querySelector('.edit-text') as HTMLTextAreaElement;
 
-    setupAttachments(card, note);
-    setupVoiceInput(card);
+    // --- ЛОГИКА ФОНА ИЗ КАРТИНКИ ---
+    const imgAtt = note.attachments.find(a => a.type.startsWith('image/'));
+    if (imgAtt) {
+        getMedia(imgAtt.id).then(blob => {
+            if (blob) {
+                const url = URL.createObjectURL(blob);
+                card.style.backgroundImage = `url(${url})`;
+                card.style.backgroundSize = 'cover';
+                card.style.backgroundPosition = 'center';
+                card.classList.add('has-bg-image'); // Добавим класс для стилей прозрачности
+            }
+        });
+    }
 
-    // --- ПРЕДОХРАНИТЕЛЬ ДЛЯ ФАЙЛОВ ---
-    // Не даем карточке закрыться, когда открыто системное окно выбора файлов
+    setupAttachments(card, note);
+    setupAudioRecorder(card, note);
+
+    // Защита от закрытия при выборе файлов (оставляем)
     let isFileDialogOpen = false;
-    const addFileBtn = card.querySelector('.add-file-btn');
-    addFileBtn?.addEventListener('mousedown', () => { isFileDialogOpen = true; });
+    card.querySelector('.add-file-btn')?.addEventListener('mousedown', () => { isFileDialogOpen = true; });
     window.addEventListener('focus', () => { isFileDialogOpen = false; });
 
     function enterEditMode() {
@@ -68,29 +80,11 @@ export function createNoteCard(
 
             saveNote(note).then(() => {
                 card.style.transform = `rotate(${(Math.random() * 2 - 1).toFixed(1)}deg)`;
-                
                 const viewHTML = createViewHTML(note);
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = viewHTML;
                 viewMode.innerHTML = tempDiv.querySelector('.note-view-mode')!.innerHTML;
-                
                 bindViewEvents();
-
-                        card.querySelector('.view-files-btn')?.addEventListener('click', (e) => {
-            e.stopPropagation();
-            showAttachments(note);
-        });
-
-        // Проигрывание аудио
-        card.querySelector('.play-audio-btn')?.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const btn = e.currentTarget as HTMLButtonElement;
-            const mediaId = btn.dataset.id;
-            if (mediaId) toggleAudio(btn, mediaId);
-        });
-
-        
-                
                 card.classList.remove('editing');
                 editMode.style.display = 'none';
                 viewMode.style.display = 'flex';
@@ -109,7 +103,6 @@ export function createNoteCard(
 
     function bindViewEvents() {
         card.querySelector('.edit-btn')?.addEventListener('click', (e) => { e.stopPropagation(); enterEditMode(); });
-        
         card.querySelector('.delete-btn')?.addEventListener('click', async (e) => {
             e.stopPropagation();
             if (confirm('Удалить заметку?')) {
@@ -119,46 +112,32 @@ export function createNoteCard(
                 setTimeout(() => { card.remove(); onUpdate(); }, 300);
             }
         });
-
         card.querySelector('.pin-btn')?.addEventListener('click', async (e) => {
             e.stopPropagation();
             note.isPinned = !note.isPinned;
             await saveNote(note);
             onUpdate();
         });
-
         card.querySelector('.view-files-btn')?.addEventListener('click', (e) => {
             e.stopPropagation();
             showAttachments(note);
         });
-
-        // Воспроизведение аудио
         card.querySelector('.play-audio-btn')?.addEventListener('click', (e) => {
-            e.preventDefault(); // На всякий случай
-            e.stopPropagation();
+            e.preventDefault(); e.stopPropagation();
             const btn = e.currentTarget as HTMLButtonElement;
-            const mediaId = btn.dataset.id;
-            if (mediaId) {
-                toggleAudio(btn, mediaId);
-            }
+            if (btn.dataset.id) toggleAudio(btn, btn.dataset.id);
         });
     }
 
     bindViewEvents(); 
 
     editMode.addEventListener('focusout', (e: FocusEvent) => {
-        // Если открыт выбор файлов — не закрываем карточку
         if (isFileDialogOpen) return;
         if (card.contains(e.relatedTarget as Node)) return;
         exitEditMode(true);
     });
-
-    editMode.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') exitEditMode(false);
-    });
-
+    editMode.addEventListener('keydown', (e) => { if (e.key === 'Escape') exitEditMode(false); });
     textInput.addEventListener('input', () => autoResizeTextarea(textInput));
-
     if (isNew) setTimeout(enterEditMode, 10);
 
     return card;

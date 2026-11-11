@@ -1,5 +1,5 @@
 import { Note } from '../types';
-import { saveMedia, deleteMedia, getMedia, saveNote } from '../storage/db'; // <-- Добавлен saveNote
+import { saveMedia, deleteMedia, getMedia, saveNote } from '../storage/db';
 import { compressImage, generateMediaId } from '../utils/media';
 import { showToast } from './toast';
 
@@ -30,28 +30,31 @@ export function setupAttachments(card: HTMLElement, note: Note) {
                     <button type="button" class="remove-file" data-id="${att.id}">✖</button>
                 `;
             } else {
+                const icon = att.type.startsWith('audio/') ? '🎵' : '📄';
                 chip.innerHTML = `
-                    <span class="preview-name">📄 ${att.name}</span>
+                    <span class="preview-name">${icon} ${att.name}</span>
                     <button type="button" class="remove-file" data-id="${att.id}">✖</button>
                 `;
             }
             previewsContainer.appendChild(chip);
         }
 
-        // Обработчики удаления
         previewsContainer.querySelectorAll('.remove-file').forEach(btn => {
             btn.addEventListener('click', async (e) => {
                 e.stopPropagation();
                 const id = (btn as HTMLElement).dataset.id!;
                 note.attachments = note.attachments.filter((a: { id: string }) => a.id !== id);
                 await deleteMedia(id);
-                await saveNote(note); // <-- Сохраняем при удалении
+                await saveNote(note);
                 renderPreviews();
             });
         });
     };
 
     renderPreviews();
+
+    // Слушаем событие добавления аудио
+    card.addEventListener('attachment-added', renderPreviews);
 
     fileInput?.addEventListener('change', async (e) => {
         const files = Array.from((e.target as HTMLInputElement).files || []);
@@ -61,21 +64,13 @@ export function setupAttachments(card: HTMLElement, note: Note) {
             try {
                 const blob = file.type.startsWith('image/') ? await compressImage(file) : file;
                 const mediaId = generateMediaId();
-                
-                // 1. Сохраняем сам файл в медиа-хранилище
                 await saveMedia(mediaId, blob);
-                
-                // 2. Привязываем к заметке
                 note.attachments.push({ id: mediaId, type: file.type, name: file.name });
             } catch (err) {
                 showToast(`Ошибка загрузки: ${file.name}`);
             }
         }
-        
-        // 3. ВАЖНО: Мгновенно сохраняем саму заметку, чтобы привязка не потерялась
         await saveNote(note);
-        note.updatedAt = Date.now(); 
-
         fileInput.value = '';
         renderPreviews();
     });

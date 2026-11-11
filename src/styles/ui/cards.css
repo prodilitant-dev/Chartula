@@ -26,3 +26,26 @@
 .tag { color: var(--accent); font-weight: 600; font-size: 0.75rem; opacity: 0.9; }
 
 .note-actions { display: flex; justify-content: flex-end; align-items: center; gap: 10px; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 10px; }
+
+/* =================================================================
+   ФОН ИЗ КАРТИНКИ
+   ================================================================= */
+.note-card.has-bg-image .note-inner {
+    /* Делаем подложку полупрозрачной, чтобы фон был виден, но текст читался */
+    background: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: inherit;
+    height: 100%;
+}
+
+[data-theme="light"] .note-card.has-bg-image .note-inner {
+    background: rgba(0, 0, 0, 0.4); /* В темной теме подложка темнее */
+    color: #fff;
+}
+
+.note-card.has-bg-image .edit-title,
+.note-card.has-bg-image .edit-text,
+.note-card.has-bg-image .note-text {
+    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+}
