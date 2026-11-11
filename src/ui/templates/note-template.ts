@@ -39,11 +39,13 @@ export function createEditHTML(note: Note): string {
             
             <div class="edit-attachments-area">
                 <div class="attachment-previews" id="previews-${note.id}"></div>
-                <label class="btn add-file-btn">
-                    📎 Добавить файл
-                    <input type="file" class="file-input" multiple accept="*/*" style="display:none;">
-                </label>
+                <div class="edit-toolbar">
+                    <label class="btn add-file-btn">
+                        📎 Добавить файл
+                        <input type="file" class="file-input" multiple accept="*/*" style="display:none;">
+                    </label>
+                    <button type="button" class="btn voice-btn" title="Голосовой ввод">🎤 Диктовать</button>
+                </div>
             </div>
-        </div>
     `;
 }

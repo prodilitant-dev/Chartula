@@ -1,5 +1,5 @@
 import { Note } from '../types';
-import { saveMedia, deleteMedia, getMedia } from '../storage/db';
+import { saveMedia, deleteMedia, getMedia, saveNote } from '../storage/db'; // <-- Добавлен saveNote
 import { compressImage, generateMediaId } from '../utils/media';
 import { showToast } from './toast';
 
@@ -11,7 +11,6 @@ export function setupAttachments(card: HTMLElement, note: Note) {
     const renderPreviews = async () => {
         if (!previewsContainer) return;
         
-        // Очищаем старые Blob-ссылки, чтобы не текла память
         tempUrls.forEach(url => URL.revokeObjectURL(url));
         tempUrls = [];
         previewsContainer.innerHTML = '';
@@ -46,6 +45,7 @@ export function setupAttachments(card: HTMLElement, note: Note) {
                 const id = (btn as HTMLElement).dataset.id!;
                 note.attachments = note.attachments.filter((a: { id: string }) => a.id !== id);
                 await deleteMedia(id);
+                await saveNote(note); // <-- Сохраняем при удалении
                 renderPreviews();
             });
         });
@@ -61,12 +61,21 @@ export function setupAttachments(card: HTMLElement, note: Note) {
             try {
                 const blob = file.type.startsWith('image/') ? await compressImage(file) : file;
                 const mediaId = generateMediaId();
+                
+                // 1. Сохраняем сам файл в медиа-хранилище
                 await saveMedia(mediaId, blob);
+                
+                // 2. Привязываем к заметке
                 note.attachments.push({ id: mediaId, type: file.type, name: file.name });
             } catch (err) {
-                showToast(`Ошибка: ${file.name}`);
+                showToast(`Ошибка загрузки: ${file.name}`);
             }
         }
+        
+        // 3. ВАЖНО: Мгновенно сохраняем саму заметку, чтобы привязка не потерялась
+        await saveNote(note);
+        note.updatedAt = Date.now(); 
+
         fileInput.value = '';
         renderPreviews();
     });
