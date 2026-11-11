@@ -40,6 +40,23 @@ export function createSettingsHTML(): string {
                     </div>
                 </div>
 
+                    <div class="setting-row">
+                        <span>Размер шрифта</span>
+                        <select id="select-fontsize" class="filter-select">
+                            <option value="small">Мелкий</option>
+                            <option value="medium">Средний</option>
+                            <option value="large">Крупный</option>
+                        </select>
+                    </div>
+                    <!-- НОВЫЙ БЛОК -->
+                    <div class="setting-row">
+                        <span>Сетка (на телефоне)</span>
+                        <select id="select-grid" class="filter-select">
+                            <option value="1">1 колонка</option>
+                            <option value="2">2 колонки</option>
+                        </select>
+                    </div>
+
                 <!-- БЛОК: ОБ АВТОРЕ (Спойлер) -->
                 <details class="settings-details">
                     <summary>👤 Об авторе</summary>

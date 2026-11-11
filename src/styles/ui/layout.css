@@ -18,3 +18,25 @@
     .search-wrapper input { font-size: 0.8rem; padding: 6px 10px 6px 30px; }
     .icon-btn { width: 36px; height: 36px; font-size: 1rem; }
 }
+
+/* В самый конец файла layout.css */
+
+@media (max-width: 600px) {
+    /* Если настройка "2 колонки" */
+    [data-grid="2"] .notes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px; /* Уменьшаем отступ */
+    }
+    
+    [data-grid="2"] .note-card {
+        min-height: 200px; /* Карточки чуть меньше */
+    }
+    
+    [data-grid="2"] .note-title {
+        font-size: 1.4rem; /* Уменьшаем заголовок */
+    }
+    
+    [data-grid="2"] .note-text {
+        font-size: 0.85rem; /* Уменьшаем текст */
+    }
+}

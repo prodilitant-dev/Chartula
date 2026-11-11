@@ -1,6 +1,6 @@
 export interface Attachment {
     id: string;
-    type: string; // mime-type (image/jpeg, audio/webm и т.д.)
+    type: string;
     name: string;
 }
 
@@ -20,4 +20,5 @@ export interface Settings {
     theme: 'dark' | 'light';
     fontSize: 'small' | 'medium' | 'large';
     voiceMode: 'cloud' | 'offline';
+    gridCols: '1' | '2'; // <-- НОВОЕ ПОЛЕ
 }

@@ -21,6 +21,12 @@ export function initSettingsModal() {
     selectTheme.value = currentSettings.theme;
     selectFontSize.value = currentSettings.fontSize;
 
+    const selectGrid = document.getElementById('select-grid') as HTMLSelectElement;
+    selectGrid.value = currentSettings.gridCols;
+    selectGrid.addEventListener('change', () => {
+        saveSettings({ gridCols: selectGrid.value as '1' | '2' });
+    });
+
     // --- ОТКРЫТИЕ / ЗАКРЫТИЕ ---
     document.getElementById('settings-link')?.addEventListener('click', () => {
         modal.classList.add('active');

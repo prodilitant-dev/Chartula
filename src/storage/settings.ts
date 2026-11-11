@@ -5,7 +5,8 @@ const SETTINGS_KEY = 'chartula_settings_v1';
 const defaultSettings: Settings = {
     theme: 'dark',
     fontSize: 'medium',
-    voiceMode: 'cloud'
+    voiceMode: 'cloud',
+    gridCols: '1' // По умолчанию одна колонка
 };
 
 export function getSettings(): Settings {
@@ -27,7 +28,9 @@ export function saveSettings(settings: Partial<Settings>) {
 export function applySettings(settings: Settings) {
     document.documentElement.setAttribute('data-theme', settings.theme);
     
-    // Меняем базовый размер шрифта
     const sizes = { small: '14px', medium: '16px', large: '18px' };
     document.documentElement.style.setProperty('--font-size-base', sizes[settings.fontSize]);
+
+    // Применяем сетку
+    document.documentElement.setAttribute('data-grid', settings.gridCols);
 }
