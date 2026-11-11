@@ -9,12 +9,16 @@ import { getSettings } from '../storage/settings';
 import { downloadICS } from '../utils/calendar';
 
 export function createNoteCard(
-  note: Note,
-  onUpdate: () => void,
-  isNew: boolean = false
+    note: Note, 
+    onUpdate: () => void, 
+    isNew: boolean = false
 ): HTMLElement {
-  const settings = getSettings();
-  const card = document.createElement('div');
+    
+    note.tags = note.tags || [];
+    note.attachments = note.attachments || [];
+
+    const settings = getSettings();
+    const card = document.createElement('div');
 
   // --- ЦВЕТА ---
   card.className = `note-card ${note.isPinned ? 'pinned' : ''}`;
@@ -157,7 +161,7 @@ export function createNoteCard(
             e.stopPropagation();
             downloadICS(note);
         });
-        
+
   }
 
   bindViewEvents();

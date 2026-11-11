@@ -24,8 +24,20 @@ export function createSettingsHTML(): string {
                             </label>
                         </div>
                     </div>
-                </div>
+                    
+                    <!-- Информация о хранилище -->
+                    <div id="storage-info" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 5px;">
+                        <div>Занято: <span id="storage-used">...</span> из <span id="storage-quota">...</span></div>
+                        <div style="width: 100%; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: 4px;">
+                            <div id="storage-bar" style="height: 100%; width: 0%; background: var(--accent); transition: width 0.3s;"></div>
+                        </div>
+                    </div>
 
+                    <button class="btn btn-danger" id="btn-clear-data" style="width: 100%;">
+                        🗑️ Очистить все данные
+                    </button>
+                </div>
+                
                 <!-- ВНЕШНИЙ ВИД -->
                 <div class="settings-section">
                     <h4>🎨 Внешний вид</h4>
@@ -68,12 +80,12 @@ export function createSettingsHTML(): string {
                     <div class="about-content">
                         <p>Привет. Меня зовут Виталий. Я — <strong>ПроДилИтант</strong>.</p>
                         <p>Делаю легкие приложения без рекламы и подписок, пилю доски и делаю всякие разности. Честно. Грязно. Полезно.</p>
-                        <p style="color: var(--accent); font-family: var(--font-hand); font-size: 1.5rem; margin-top: 15px; margin-bottom: 15px;">Pank immortalis est.</p>
-                        
+                                                
                         <!-- Кнопка поддержки -->
                         <button class="btn btn-support" id="btn-support" style="width: 100%;">
                             ❤️ Поддержать автора
                         </button>
+                <p style="color: var(--accent); font-family: var(--font-hand); font-size: 1.5rem; margin-top: 15px; margin-bottom: 15px;">Pank immortalis est.</p>
                     </div>
                 </details>
             </div>

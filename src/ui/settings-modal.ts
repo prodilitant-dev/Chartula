@@ -6,6 +6,14 @@ import { renderNotes } from './notes-grid';
 import { showToast } from './toast';
 import { checkForUpdates } from '../pwa/register';
 
+function formatBytes(bytes: number) {
+    if (bytes === 0) return '0 Б';
+    const k = 1024;
+    const sizes = ['Б', 'КБ', 'МБ', 'ГБ'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
 export function initSettingsModal() {
     const root = document.getElementById('modal-root');
     if (!root) return;
@@ -90,9 +98,30 @@ export function initSettingsModal() {
         });
     };
 
+        const updateStorageInfo = async () => {
+        if (navigator.storage && navigator.storage.estimate) {
+            const estimate = await navigator.storage.estimate();
+            const usage = estimate.usage || 0;
+            const quota = estimate.quota || 0;
+
+            const usedEl = document.getElementById('storage-used')!;
+            const quotaEl = document.getElementById('storage-quota')!;
+            const barEl = document.getElementById('storage-bar')!;
+
+            usedEl.textContent = formatBytes(usage);
+            quotaEl.textContent = formatBytes(quota);
+
+            const percent = quota > 0 ? (usage / quota) * 100 : 0;
+            barEl.style.width = `${Math.min(percent, 100)}%`;
+        } else {
+            document.getElementById('storage-info')!.innerHTML = 'Информация недоступна в этом браузере.';
+        }
+    };
+
     document.getElementById('settings-link')?.addEventListener('click', () => {
         loadSettingsUI();
         renderCategoryColors();
+        updateStorageInfo(); // <-- ДОБАВИТЬ ЭТО
         modal.classList.add('active');
     });
 
@@ -122,4 +151,24 @@ export function initSettingsModal() {
     document.getElementById('app-version')?.addEventListener('click', async () => {
         await checkForUpdates(); // Убрали showToast, теперь он внутри функции
     });
+
+        // Очистка всех данных
+    document.getElementById('btn-clear-data')?.addEventListener('click', async () => {
+        if (confirm('ВНИМАНИЕ! Все заметки и файлы будут навсегда удалены. Сделайте экспорт, если хотите сохранить их. Продолжить?')) {
+            try {
+                // Очищаем IndexedDB
+                const req = indexedDB.deleteDatabase('ChartulaDB');
+                req.onsuccess = () => {
+                    localStorage.clear(); // Чистим и настройки
+                    showToast('Все данные удалены. Перезагрузка...', 3000);
+                    setTimeout(() => window.location.reload(), 1500);
+                };
+                req.onerror = () => showToast('Ошибка при очистке базы данных');
+            } catch (e) {
+                console.error(e);
+                showToast('Ошибка очистки');
+            }
+        }
+    });
+
 }

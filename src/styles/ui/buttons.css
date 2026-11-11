@@ -146,3 +146,14 @@
   color: var(--accent);
   transform: scale(1.2) rotate(90deg);
 }
+
+.btn-danger {
+    background: transparent;
+    color: #e74c3c;
+    border-color: #e74c3c;
+    font-weight: 600;
+}
+.btn-danger:hover {
+    background: #e74c3c;
+    color: #fff;
+}
