@@ -12,22 +12,22 @@ import { initAttachmentViewer } from './ui/attachment-viewer';
 import { setupPWA } from './pwa/register'; // <-- Новый импорт
 
 async function bootstrap() {
-    applySettings(getSettings());
-    setupPWA(); // <-- Инициализация PWA
+  applySettings(getSettings());
+  setupPWA(); // <-- Инициализация PWA
 
-    try {
-        await initDB();
-        console.log('База данных готова к работе');
-        
-        initSettingsModal();
-        initAttachmentViewer();
-        await renderNotes();
-    } catch (error) {
-        console.error('Ошибка инициализации:', error);
-        showToast('Ошибка хранилища. Данные могут не сохраниться.');
-    }
+  try {
+    await initDB();
+    console.log('База данных готова к работе');
 
-    document.getElementById('add-note-btn')?.addEventListener('click', addNewNote);
+    initSettingsModal();
+    initAttachmentViewer();
+    await renderNotes();
+  } catch (error) {
+    console.error('Ошибка инициализации:', error);
+    showToast('Ошибка хранилища. Данные могут не сохраниться.');
+  }
+
+  document.getElementById('add-note-btn')?.addEventListener('click', addNewNote);
 }
 
 bootstrap();

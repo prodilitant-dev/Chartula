@@ -1,60 +1,242 @@
+/* =================================================================
+   ОБЩИЕ СТИЛИ МОДАЛЬНЫХ ОКОН
+   ================================================================= */
 .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 2000; opacity: 0; pointer-events: none; transition: 0.3s;
-    padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  padding: 20px;
 }
-.modal-overlay.active { opacity: 1; pointer-events: all; }
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
 
 .modal-content {
-    background: var(--surface); border: 2px solid var(--border);
-    padding: 25px; width: 100%; max-width: 450px;
-    max-height: 90vh; overflow-y: auto; transform: translateY(20px); transition: 0.3s;
-    color: var(--text); border-radius: var(--wobbly);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  padding: 25px;
+  width: 100%;
+  max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(20px);
+  transition: 0.3s;
+  color: var(--text);
+  border-radius: var(--wobbly);
 }
-.modal-overlay.active .modal-content { transform: translateY(0); }
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
 
 .modal-header {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.modal-header h3 { font-family: var(--font-heading); color: var(--accent); font-size: 1.4rem; }
+.modal-header h3 {
+  font-family: var(--font-heading);
+  color: var(--accent);
+  font-size: 1.4rem;
+}
 
-/* Секции настроек */
+/* =================================================================
+   НАСТРОЙКИ (SETTINGS)
+   ================================================================= */
 .settings-section {
-    margin-bottom: 25px; border-bottom: 1px dashed var(--border); padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px dashed var(--border);
+  padding-bottom: 15px;
 }
-.settings-section h4 { font-size: 1.1rem; margin-bottom: 10px; font-weight: 600; }
-.settings-hint { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; }
+.settings-section h4 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
 
-.settings-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+/* Строка заголовка с кнопками (Экспорт/Импорт) */
+.settings-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.settings-header-row h4 {
+  margin-bottom: 0;
+}
+
+.settings-icon-row {
+  display: flex;
+  gap: 8px;
+}
 
 .setting-row {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
-.setting-row span { font-size: 0.95rem; }
+.setting-row span {
+  font-size: 0.95rem;
+}
 
 /* Спойлер "Об авторе" */
 .settings-details summary {
-    cursor: pointer; font-weight: 600; color: var(--accent);
-    outline: none; user-select: none; padding: 10px 0;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--accent);
+  outline: none;
+  user-select: none;
+  padding: 5px 0;
 }
 .about-content {
-    font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin-top: 10px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-top: 10px;
 }
-.about-content p { margin-bottom: 10px; }
+.about-content p {
+  margin-bottom: 10px;
+}
 
-/* Галерея вложений */
-.att-gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
+/* =================================================================
+   ЦВЕТА КАТЕГОРИЙ (Кнопки-стикеры)
+   ================================================================= */
+.category-colors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-top: 5px;
 }
+
+.cat-color-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.cat-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
+.cat-dots {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding: 5px 0;
+}
+
+/* Кнопки-цвета в стиле "кривых" кнопок */
+.color-dot {
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+
+  /* Кривая форма */
+  border-radius: var(--wobbly-btn);
+  /* Рамка как у кнопок */
+  border: 2px solid var(--border-light);
+  /* Тень для объема */
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+/* Рандомный наклон для стикеров */
+.color-dot:nth-child(even) {
+  transform: rotate(4deg);
+}
+.color-dot:nth-child(odd) {
+  transform: rotate(-3deg);
+}
+
+.color-dot:hover {
+  transform: scale(1.15) rotate(0deg);
+  border-color: var(--accent);
+  z-index: 10;
+}
+
+/* Выбранный цвет */
+.color-dot.selected {
+  border-color: var(--accent);
+  border-width: 3px;
+  transform: scale(1.15) rotate(0deg);
+  box-shadow:
+    0 0 0 2px var(--surface),
+    2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Палитра цветов */
+.color-dot.c1 {
+  background: var(--note-c1);
+}
+.color-dot.c2 {
+  background: var(--note-c2);
+}
+.color-dot.c3 {
+  background: var(--note-c3);
+}
+.color-dot.c4 {
+  background: var(--note-c4);
+}
+.color-dot.c5 {
+  background: var(--note-c5);
+}
+.color-dot.c6 {
+  background: var(--note-c6);
+}
+.color-dot.c7 {
+  background: var(--note-c7);
+}
+.color-dot.c8 {
+  background: var(--note-c8);
+}
+.color-dot.c9 {
+  background: var(--note-c9);
+}
+.color-dot.c10 {
+  background: var(--note-c10);
+}
+
+/* =================================================================
+   ГАЛЕРЕЯ ВЛОЖЕНИЙ (Просмотр файлов)
+   ================================================================= */
+.att-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
 .att-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }

@@ -1,5 +1,5 @@
 export function createAttachmentModalHTML(): string {
-    return `
+  return `
         <div class="modal-overlay" id="attachment-modal">
             <div class="modal-content" style="max-width: 800px; padding: 15px;">
                 <div class="modal-header" style="margin-bottom: 10px;">

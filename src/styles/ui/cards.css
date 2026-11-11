@@ -1,51 +1,190 @@
 .note-card {
-    color: var(--note-text); box-shadow: 2px 5px 15px rgba(0,0,0,0.15);
-    display: flex; flex-direction: column; position: relative;
-    transition: var(--transition); border: 2px solid rgba(0,0,0,0.1);
-    border-radius: var(--wobbly); overflow: hidden; min-height: 250px;
+  color: var(--note-text);
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: var(--transition);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--wobbly);
+  overflow: hidden;
+  min-height: 250px;
 }
-.note-card:nth-child(even) { border-radius: var(--wobbly-alt); }
-.note-card:hover { transform: translateY(-5px) scale(1.02) !important; z-index: 10; box-shadow: 4px 8px 20px rgba(0,0,0,0.3); }
-.note-card.pinned { border: 2px solid var(--accent); box-shadow: 0 0 15px rgba(217, 122, 56, 0.4); }
-.note-card.color-yellow { background-color: var(--note-yellow); }
-.note-card.color-blue { background-color: var(--note-blue); }
-.note-card.color-green { background-color: var(--note-green); }
-.note-card.color-pink { background-color: var(--note-pink); }
+.note-card:nth-child(even) {
+  border-radius: var(--wobbly-alt);
+}
+.note-card:hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  z-index: 10;
+  box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.3);
+}
+.note-card.pinned {
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 15px rgba(217, 122, 56, 0.4);
+}
+.note-card.color-yellow {
+  background-color: var(--note-yellow);
+}
+.note-card.color-blue {
+  background-color: var(--note-blue);
+}
+.note-card.color-green {
+  background-color: var(--note-green);
+}
+.note-card.color-pink {
+  background-color: var(--note-pink);
+}
 
-.note-inner { padding: 15px; display: flex; flex-direction: column; height: 100%; }
-.note-view-mode { display: flex; flex-direction: column; height: 100%; width: 100%; }
-.note-edit-mode { display: none; flex-direction: column; gap: 10px; height: 100%; width: 100%; }
-.note-card.editing { z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px dashed var(--accent); }
+.note-inner {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.note-view-mode {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.note-edit-mode {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  width: 100%;
+}
+.note-card.editing {
+  z-index: 100;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 2px dashed var(--accent);
+}
 
-.note-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 10px; }
-.note-title { font-family: var(--font-hand); font-size: 1.8rem; font-weight: 700; line-height: 1.1; word-break: break-word; }
-.note-date { font-size: 0.7rem; color: #555; font-weight: bold; text-transform: uppercase; white-space: nowrap; margin-top: 5px; }
-.note-text { font-size: 0.95rem; flex-grow: 1; margin-bottom: 15px; white-space: pre-wrap; word-break: break-word; }
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+.note-title {
+  font-family: var(--font-hand);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.1;
+  word-break: break-word;
+}
+.note-date {
+  font-size: 0.7rem;
+  color: #555;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-top: 5px;
+}
+.note-text {
+  font-size: 0.95rem;
+  flex-grow: 1;
+  margin-bottom: 15px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 
-.note-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; margin-bottom: 15px; }
-.tag { color: var(--accent); font-weight: 600; font-size: 0.75rem; opacity: 0.9; }
+.note-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  margin-bottom: 15px;
+}
+.tag {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
 
-.note-actions { display: flex; justify-content: flex-end; align-items: center; gap: 10px; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 10px; }
+.note-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+  padding-top: 10px;
+}
 
 /* =================================================================
    ФОН ИЗ КАРТИНКИ
    ================================================================= */
 .note-card.has-bg-image .note-inner {
-    /* Делаем подложку полупрозрачной, чтобы фон был виден, но текст читался */
-    background: rgba(255, 255, 255, 0.7); 
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: inherit;
-    height: 100%;
+  /* Делаем подложку полупрозрачной, чтобы фон был виден, но текст читался */
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: inherit;
+  height: 100%;
 }
 
-[data-theme="light"] .note-card.has-bg-image .note-inner {
-    background: rgba(0, 0, 0, 0.4); /* В темной теме подложка темнее */
-    color: #fff;
+[data-theme='light'] .note-card.has-bg-image .note-inner {
+  background: rgba(0, 0, 0, 0.4); /* В темной теме подложка темнее */
+  color: #fff;
 }
 
 .note-card.has-bg-image .edit-title,
 .note-card.has-bg-image .edit-text,
 .note-card.has-bg-image .note-text {
-    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Генерация 10 цветов */
+.color-c1 {
+  background-color: var(--note-c1);
+}
+.color-c2 {
+  background-color: var(--note-c2);
+}
+.color-c3 {
+  background-color: var(--note-c3);
+}
+.color-c4 {
+  background-color: var(--note-c4);
+}
+.color-c5 {
+  background-color: var(--note-c5);
+}
+.color-c6 {
+  background-color: var(--note-c6);
+}
+.color-c7 {
+  background-color: var(--note-c7);
+}
+.color-c8 {
+  background-color: var(--note-c8);
+}
+.color-c9 {
+  background-color: var(--note-c9);
+}
+.color-c10 {
+  background-color: var(--note-c10);
+}
+
+.note-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.note-category {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+[data-theme='light'] .note-category {
+  background: rgba(0, 0, 0, 0.1);
 }

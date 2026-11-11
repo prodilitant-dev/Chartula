@@ -1,24 +1,25 @@
 export interface Attachment {
-    id: string;
-    type: string;
-    name: string;
+  id: string;
+  type: string;
+  name: string;
 }
 
 export interface Note {
-    id: number;
-    title: string;
-    text: string;
-    tags: string[];
-    color: 'yellow' | 'blue' | 'green' | 'pink';
-    isPinned: boolean;
-    createdAt: number;
-    updatedAt: number;
-    attachments: Attachment[];
+  id: number;
+  title: string;
+  text: string;
+  tags: string[]; // [0] - Категория, остальные - теги
+  color: string; // Оставим на будущее, но сейчас используем категории
+  isPinned: boolean;
+  createdAt: number;
+  updatedAt: number;
+  attachments: Attachment[];
 }
 
 export interface Settings {
-    theme: 'dark' | 'light';
-    fontSize: 'small' | 'medium' | 'large';
-    voiceMode: 'cloud' | 'offline';
-    gridCols: '1' | '2'; // <-- НОВОЕ ПОЛЕ
+  theme: 'dark' | 'light' | 'system'; // <-- Добавили 'system'
+  fontSize: 'small' | 'medium' | 'large';
+  voiceMode: 'cloud' | 'offline';
+  gridCols: '1' | '2';
+  categoryColors: Record<string, number>;
 }
