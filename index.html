@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chartula</title>
+    <meta name="theme-color" content="#d97a38">
+</head>
+<body>
+    <header class="top-bar" id="top-bar">
+        <select id="category-filter" class="filter-select">
+            <option value="all">Все</option>
+            <option value="__pinned__">📌 Закреплённые</option>
+        </select>
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Поиск...">
+        </div>
+        <button class="icon-btn primary" id="add-note-btn" title="Создать заметку">+</button>
+    </header>
+
+    <main id="app">
+        <div class="container">
+            <div class="notes-grid" id="notes-grid"></div>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Кликабельный текст для открытия настроек -->
+        <span id="settings-link">© 2026 ПроДилИтант. Chartula.</span>
+    </footer>
+
+    <!-- Контейнер для модальных окон (Заполним динамически) -->
+    <div id="modal-root"></div>
+    
+    <!-- Тосты -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

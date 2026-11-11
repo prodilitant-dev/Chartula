@@ -1,0 +1,45 @@
+:root {
+    --bg: #1a1b1f;
+    --surface: #222328;
+    --surface-hover: #2a2b31;
+    --text: #f0f0f0;
+    --text-muted: #94969e;
+    --accent: #d97a38;
+    --accent-hover: #f08c48;
+    --border: #35363d;
+    --border-light: #4a4b54;
+
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-hand: 'Caveat', cursive;
+    --font-size-base: 1rem;
+
+    --wobbly: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    --wobbly-alt: 15px 225px 15px 255px / 255px 15px 225px 15px;
+    --wobbly-btn: 115px 15px 125px 15px / 15px 125px 15px 115px;
+    --wobbly-input: 45px 15px 35px 20px / 20px 35px 15px 45px;
+    --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    /* Цвета заметок */
+    --note-yellow: #fdf5e6;
+    --note-blue: #e8f4f8;
+    --note-green: #e8f8e8;
+    --note-pink: #f8e8f4;
+    --note-text: #1a1a1a;
+    
+    --note-yellow-overlay: rgba(253, 245, 230, 0.85);
+    --note-blue-overlay: rgba(232, 244, 248, 0.85);
+    --note-green-overlay: rgba(232, 248, 232, 0.85);
+    --note-pink-overlay: rgba(248, 232, 244, 0.85);
+}
+
+[data-theme="light"] {
+    --bg: #f4f4f4;
+    --surface: #ffffff;
+    --surface-hover: #e9e9e9;
+    --text: #111111;
+    --text-muted: #666666;
+    --border: #d1d1d1;
+    --border-light: #b0b0b0;
+    --note-text: #111;
+}
