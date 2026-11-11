@@ -6,20 +6,24 @@ import './styles/main.css';
 import { initDB } from './storage/db';
 import { getSettings, applySettings } from './storage/settings';
 import { showToast } from './ui/toast';
+import { renderNotes, addNewNote } from './ui/notes-grid';
+import { initSettingsModal } from './ui/settings-modal';
 
 async function bootstrap() {
-    // 1. Применяем тему и настройки
     applySettings(getSettings());
 
-    // 2. Инициализируем базу данных
     try {
         await initDB();
-        console.log('База данных готова к работе');
-        // Здесь мы потом вызовем рендер заметок
+        await renderNotes();
+    initSettingsModal();
+         // Первый рендер при запуске
     } catch (error) {
-        console.error('Ошибка инициализации БД:', error);
-        showToast('Ошибка хранилища. Данные могут не сохраниться.');
+        console.error('Ошибка инициализации:', error);
+        showToast('Ошибка хранилища.');
     }
+
+    // Слушатель кнопки "+"
+    document.getElementById('add-note-btn')?.addEventListener('click', addNewNote);
 }
 
 bootstrap();

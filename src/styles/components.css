@@ -90,9 +90,11 @@
 }
 
 .note-header {
-    display: flex; justify-content: space-between;
-    margin-bottom: 10px; font-size: 0.75rem; font-weight: bold;
-    text-transform: uppercase; letter-spacing: 1px; color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 10px;
 }
 .note-cat { color: var(--accent); }
 
@@ -126,3 +128,138 @@
     .icon-btn { width: 36px; height: 36px; font-size: 1rem; }
     .icon-btn.primary { font-size: 1.3rem; }
 }
+
+/* --- СТИЛИ ДЛЯ РЕЖИМА РЕДАКТИРОВАНИЯ --- */
+.note-edit-mode {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.note-card.editing {
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 2px dashed var(--accent);
+}
+
+.note-card.editing .note-inner {
+    padding-bottom: 5px;
+}
+
+/* Поля ввода */
+.edit-title {
+    font-family: var(--font-hand);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--note-text);
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed rgba(0,0,0,0.2);
+    outline: none;
+    width: 100%;
+    padding-bottom: 5px;
+}
+
+.edit-tags {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--note-text);
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed rgba(0,0,0,0.2);
+    outline: none;
+    width: 100%;
+    padding-bottom: 5px;
+}
+
+.edit-text {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--note-text);
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    width: 100%;
+    flex-grow: 1;
+    min-height: 120px;
+    overflow: hidden;
+}
+
+/* Теги в режиме просмотра */
+.note-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.tag { color: var(--accent); font-weight: 600; font-size: 0.75rem; opacity: 0.9; }
+
+/* Кнопки действий */
+.note-actions { display: flex; gap: 5px; }
+
+.action-btn {
+    background: transparent; 
+    border: none; 
+    cursor: pointer;
+    font-size: 1.1rem; 
+    opacity: 0.5; 
+    transition: 0.2s; 
+    padding: 0;
+}
+.action-btn:hover { opacity: 1; transform: scale(1.15); }
+.action-btn.active { opacity: 1; }
+
+.note-view-mode {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.note-title { 
+    font-family: var(--font-hand); 
+    font-size: 1.8rem; 
+    font-weight: 700; 
+    line-height: 1.1; 
+    word-break: break-word;
+}
+
+.note-date { 
+    font-size: 0.7rem; 
+    color: #555; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    white-space: nowrap;
+    margin-top: 5px;
+}
+
+.note-text { 
+    font-size: 0.95rem; 
+    flex-grow: 1; 
+    margin-bottom: 15px; 
+    white-space: pre-wrap; 
+    word-break: break-word; 
+}
+
+.note-tags { 
+    display: flex; 
+    gap: 6px; 
+    flex-wrap: wrap; 
+    margin-top: auto; /* Прижимает к кнопкам */
+    margin-bottom: 15px; 
+}
+
+.tag { 
+    color: var(--accent); 
+    font-weight: 600; 
+    font-size: 0.75rem; 
+    opacity: 0.9; 
+}
+
+/* Кнопки в самом низу */
+.note-actions { 
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 10px; 
+    border-top: 1px dashed rgba(0,0,0,0.1); 
+    padding-top: 10px;
+}
+

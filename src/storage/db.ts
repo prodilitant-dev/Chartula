@@ -106,3 +106,15 @@ export function deleteMedia(id: string): Promise<void> {
         request.onerror = () => reject(request.error);
     });
 }
+
+export function getAllMedia(): Promise<{ id: string; blob: Blob }[]> {
+    return new Promise((resolve, reject) => {
+        if (!db) return reject('БД не инициализирована');
+        const tx = db.transaction('media', 'readonly');
+        const store = tx.objectStore('media');
+        const request = store.getAll();
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+}

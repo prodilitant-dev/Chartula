@@ -1,0 +1,55 @@
+/* =================================================================
+   МОДАЛЬНОЕ ОКНО
+   ================================================================= */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2000; opacity: 0; pointer-events: none; transition: 0.3s;
+    padding: 20px;
+}
+.modal-overlay.active { opacity: 1; pointer-events: all; }
+
+.modal-content {
+    background: var(--surface); border: 2px solid var(--border);
+    padding: 25px; width: 100%; max-width: 450px;
+    max-height: 90vh; overflow-y: auto; transform: translateY(20px); transition: 0.3s;
+    color: var(--text); border-radius: var(--wobbly);
+}
+.modal-overlay.active .modal-content { transform: translateY(0); }
+
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+}
+
+.modal-header h3 { font-family: var(--font-heading); color: var(--accent); font-size: 1.4rem; }
+
+.close-btn {
+    background: transparent; border: none; color: var(--text-muted);
+    font-size: 1.2rem; cursor: pointer; transition: 0.2s;
+}
+.close-btn:hover { color: var(--accent); transform: scale(1.1); }
+
+/* Секции настроек */
+.settings-section {
+    margin-bottom: 25px; border-bottom: 1px dashed var(--border); padding-bottom: 15px;
+}
+.settings-section h4 { font-size: 1.1rem; margin-bottom: 10px; font-weight: 600; }
+.settings-hint { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; }
+
+.settings-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.setting-row {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+}
+.setting-row span { font-size: 0.95rem; }
+
+/* Спойлер */
+.settings-details summary {
+    cursor: pointer; font-weight: 600; color: var(--accent);
+    outline: none; user-select: none; padding: 10px 0;
+}
+.about-content {
+    font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin-top: 10px;
+}
+.about-content p { margin-bottom: 10px; }
